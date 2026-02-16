@@ -4,6 +4,7 @@ using UnityEditor.UI;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+using UObject = UnityEngine.Object;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,9 +22,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        BeyBlade[] blades = FindObjectsOfType<BeyBlade>();
+        BeyBlade[] blades = UObject.FindObjectsByType<BeyBlade>(FindObjectsSortMode.None);
 
-        foreach(BeyBlade b in blades)
+        foreach (BeyBlade b in blades)
         {
             aliveBeyBlades.Add(b);
             b.OnDeath += HandleBeyBladeDeath;
