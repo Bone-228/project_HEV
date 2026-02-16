@@ -1,12 +1,18 @@
 using NUnit.Framework;
 using UnityEngine;
+using UnityEditor.UI;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using System;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private Text resultText;
+
     public static GameManager instance;
 
-    private List<GameObject> blades = new List<GameObject>();
+    private List<BeyBlade> aliveBeyBlades = new List<BeyBlade>();
 
     private void Awake()
     {
@@ -15,14 +21,28 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        blades.AddRange(GameObject.FindGameObjectsWithTag("BeyBlade"));
+        BeyBlade[] blades = FindObjectsOfType<BeyBlade>();
+
+        foreach(BeyBlade b in blades)
+        {
+            aliveBeyBlades.Add(b);
+            b.OnDeath += HandleBeyBladeDeath;
+        }
+
+        resultText.text = "";
+
     }
 
-    public void BeyBladeDestroyed(GameObject obj)
+    private void HandleBeyBladeDeath(BeyBlade blade)
     {
-        blades.Remove(obj);
+        aliveBeyBlades.Remove(blade);
 
-        if (blades.Count == 1)
-            Debug.Log($"Winner: {blades[0].name}");
+        if (aliveBeyBlades.Count == 1)
+        {
+            resultText.text = $"Winner: {aliveBeyBlades[0].name}";
+        } else if (aliveBeyBlades.Count == 0)
+        {
+            resultText.text = "Draw!";
+        }
     }
 }
