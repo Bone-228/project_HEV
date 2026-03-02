@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
-using UObject = UnityEngine.Object;
 
 public class GameManager : MonoBehaviour
 {
@@ -25,12 +24,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        BeyBlade[] blades = UObject.FindObjectsByType<BeyBlade>(FindObjectsSortMode.None);
+        GameObject[] blades = GameObject.FindGameObjectsWithTag("BeyBlade");
 
-        foreach (BeyBlade b in blades)
+        foreach (GameObject bey in blades)
         {
-            aliveBeyBlades.Add(b);
-            b.OnDeath += HandleBeyBladeDeath;
+            BeyBlade b = bey.GetComponent<BeyBlade>();
+            if (b != null)
+            {
+                aliveBeyBlades.Add(b);
+                b.OnDeath += HandleBeyBladeDeath;
+            }
         }
 
         resultText.text = "";
