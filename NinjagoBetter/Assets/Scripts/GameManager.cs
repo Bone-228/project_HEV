@@ -4,11 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Text resultText;
-    [SerializeField] private Text countdownText;
+    [SerializeField] private TMP_Text resultText;
+    [SerializeField] private TMP_Text countdownText;
 
     public static GameManager instance;
 
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
 
         if (gameEnded && Input.GetKeyDown(KeyCode.R))
         {
+            Debug.Log("restartuju");
             RestartGame();
         }
     }
