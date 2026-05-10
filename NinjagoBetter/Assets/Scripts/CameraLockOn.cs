@@ -1,43 +1,39 @@
 using UnityEngine;
-using Unity.Cinemachine;
 
-[DefaultExecutionOrder(1000)]
 public class CameraLockOn : MonoBehaviour
 {
-    [Header("Nastavení Cíle")]
+    public Transform player;
     public Transform enemyTarget;
 
-    [Header("Nastavení Pozice")]
-    public Vector3 cameraOffset = new Vector3(0, 3, -5);
+    public float distance = 7f;
+    public float height = 4f;
+    public float smoothTime = 0.15f;
 
-    [Header("Sklon Kamery")]
-    [Range(-45f, 45f)]
-    public float cameraTilt = 10f;
+    private Vector3 currentVelocity = Vector3.zero;
 
     void Start()
     {
-        // Vypnout Cinemachine – jinak pøepíše vše co nastavíme ruènì
-        var brain = Camera.main?.GetComponent<CinemachineBrain>();
-        if (brain != null) brain.enabled = false;
+        transform.SetParent(null);
+    }
+
+    void FixedUpdate()
+    {
+        if (player == null || enemyTarget == null) return;
+
+        Vector3 dirFromEnemy = (player.position - enemyTarget.position);
+        dirFromEnemy.y = 0;
+        dirFromEnemy.Normalize();
+
+        Vector3 targetPos = player.position + (dirFromEnemy * distance) + (Vector3.up * height);
+
+        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref currentVelocity, smoothTime);
     }
 
     void LateUpdate()
     {
-        if (Camera.main == null) return;
+        if (player == null || enemyTarget == null) return;
 
-        Camera.main.transform.position = this.transform.position + cameraOffset;
-
-        if (enemyTarget != null)
-        {
-            // Použij root pozici nepøítele – ignoruje rotaci child objektù
-            Vector3 targetPos = enemyTarget.root.position;
-
-            // Volitelnì: ignoruj i výškové rozdíly (Y), kamera se nebude klonit nahoru/dolù
-            targetPos.y = Camera.main.transform.position.y;
-
-            Vector3 direction = targetPos - Camera.main.transform.position;
-            Camera.main.transform.rotation = Quaternion.LookRotation(direction)
-                                           * Quaternion.Euler(cameraTilt, 0f, 0f);
-        }
+        Vector3 lookAtPoint = (player.position + enemyTarget.position) / 2f;
+        transform.LookAt(lookAtPoint + Vector3.up);
     }
 }

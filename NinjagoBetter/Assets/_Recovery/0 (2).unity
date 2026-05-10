@@ -383,7 +383,6 @@ GameObject:
   - component: {fileID: 1009839011}
   - component: {fileID: 1009839010}
   - component: {fileID: 1009839009}
-  - component: {fileID: 1009839013}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -509,23 +508,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &1009839013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1009839008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7b979cfae565b149b5fe8f0b392feba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraLockOn
-  player: {fileID: 1423368704}
-  enemyTarget: {fileID: 1616112660}
-  distance: 7
-  height: 4
-  smoothTime: 0.15
 --- !u!1 &1117360146
 GameObject:
   m_ObjectHideFlags: 0
@@ -1533,6 +1515,7 @@ GameObject:
   - component: {fileID: 1854734025}
   - component: {fileID: 1854734028}
   - component: {fileID: 1854734029}
+  - component: {fileID: 1854734030}
   m_Layer: 0
   m_Name: Player
   m_TagString: BeyBlade
@@ -1610,7 +1593,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!135 &1854734029
@@ -1634,6 +1617,21 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.2
   m_Center: {x: 0.24, y: -0.14, z: -2.04}
+--- !u!114 &1854734030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854734024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b979cfae565b149b5fe8f0b392feba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraLockOn
+  enemyTarget: {fileID: 1993154509}
+  cameraOffset: {x: 0, y: 6, z: -10}
+  cameraTilt: 0.7
 --- !u!1 &1993154505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1649,7 +1647,7 @@ GameObject:
   - component: {fileID: 1993154510}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
