@@ -5,8 +5,8 @@ public class CameraLockOn : MonoBehaviour
     public Transform player;
     public Transform enemyTarget;
 
-    public float distance = 7f;
-    public float height = 4f;
+    public float distance = 5f;
+    public float height = 10f;
     public float smoothTime = 0.15f;
 
     private Vector3 currentVelocity = Vector3.zero;
