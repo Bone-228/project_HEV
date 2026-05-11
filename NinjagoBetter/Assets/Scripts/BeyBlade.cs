@@ -69,6 +69,7 @@ public abstract class BeyBlade : MonoBehaviour
         {
             Die();
         }
+        Debug.Log(currentHealth);
     }
 
     protected virtual void Die()
